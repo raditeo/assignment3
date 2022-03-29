@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <script>
+            const api_url = "http://localhost:8080/value";
+
+            async function getapi(url) {
+                const response = await fetch(url);
+                
+                var data = await response.json();
+                console.log(data);
+
+                show(data);
+            }
+
+            getapi(api_url);
+
+            function show(data) {
+                let tab = '';
+
+                var water = data.Status.Water;
+                var wind = data.Status.Wind;
+
+                if (water < 5) {
+                    tab = 'Level air: ' + water + ' m, Status Aman<br>';
+                } else if (water >= 5 && water <= 8) {
+                    tab = 'Level air: ' + water + ' m, Status Siaga<br>';
+                } else if (water > 8) {
+                    tab = 'Level air: ' + water + ' m, Status Bahaya<br>';
+                }
+
+                if (wind < 6) {
+                    tab += 'Kecepatan udara: ' + wind + ' m/s, Status Aman<br>';
+                } else if (wind >= 6 && wind <= 15) {
+                    tab += 'Kecepatan udara: ' + wind + ' m/s, Status Siaga<br>';
+                } else if (wind > 15) {
+                    tab += 'Kecepatan udara: ' + wind + ' m/s, Status Bahaya<br>';
+                }
+                
+                document.getElementById("value").innerHTML = tab;
+            }
+
+            setTimeout(function(){
+                window.location.reload(1);
+            }, 1000);
+        </script>
+    </head>
+    <body>
+        <p id="value">
+		
+	    </p>
+    </body>
+	
+</html>
